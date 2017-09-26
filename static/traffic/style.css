@@ -1,0 +1,109 @@
+/*James Page*/
+/*This is the CSS file for the traffic site*/
+
+* {
+	font-family: arial;
+}
+
+body {
+    background: white;
+}
+
+h1 {
+	font: 56px arial;
+}
+
+.extraRowTemplate {
+  display:none;
+}
+
+#map {
+  background: rgb(86,158,44);
+  width: 1200px;
+  height: 200px;
+  border-radius: 10px;
+}
+
+#road {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  background: rgb(71,71,71);
+}
+
+
+/*********************************BEGINNING OF CAR DIVS*************************************/
+#car1 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#car2 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#car3 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#car4 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#car5 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#car6 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#car7 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#car8 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#car9 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#car10 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+/**************************************END OF CAR DIVS*************************************/
+
+
+
