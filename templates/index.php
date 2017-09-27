@@ -6,6 +6,7 @@
 <html>
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<title>Traffic Simulation</title>
 	</head>
 	<body>
@@ -41,7 +42,8 @@
 
 				<!--extraRowTemplate will be repeated for every change in the accleration of the
 					head car -->
-				<p class = "extraRowTemplate" name = "extraRowTemplate">
+				<div id = 'container'>
+				<div class = "extraRowTemplate" name = "extraRowTemplate">
 					Change:
 					<select name="change">
 					<option value="acc">Acceleration</option>
@@ -50,13 +52,14 @@
 
 					Start time: <input type = "text" name="starttime">
 					End time: <input type = "text" name="endtime">
-					Amount (in fps): <input type = "text" name="amount">
-					<br>
-				</p>
+					Amount (in fps): <input type = "text" name="amount"> 
+				</div>
 
-				<div id = 'container'></div>
+				</div>
 
-				<a href="#" id = "addRow"><i class="icon-plus-sign"></i>Add Change</a><br>
+				<div style = "width: 400px; margin: 0 auto;">
+					<a href = "#" id = "addRow" class = "plus-icon">+ Add Row +</a><br/>
+				</div>
 
 				<input type="submit" value="Load Head Car">
 			</form>
@@ -128,6 +131,10 @@
 					}).hide().appendTo('#container').slideDown('slow');
 				});
 
+				$("#form").on('click', '#close', function(){
+					$(this).closest('.extraRow').remove()
+				});
+
 				//
   				var $form = $('form');
   				var $button = document.querySelector('input[type=submit]');
@@ -173,6 +180,7 @@
 			function newRow(){
 				var len = $('.extraRow').length;
 				var $html = $('.extraRowTemplate').clone();
+				$('<button id = "close" class = "minus-icon">X</button><br>').appendTo($html);
 				return $html.html();
 			}
 

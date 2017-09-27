@@ -19,19 +19,56 @@ h1 {
 	font: 56px lekton;
 }
 
+/**************style for the plus and minus links***************************/
+
+.plus-icon {
+  
+  width: 96px;
+
+  font: 18px lekton;
+  border: solid #666;
+  border-width: 1px;
+
+  text-align: center;
+}
+
+.minus-icon {
+
+  font: lekton;
+  border: 1px solid black;
+
+
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+/****************************************************************************/
+
 #form {
+  margin: auto;
   width: 1100px;
-  left: 50px;
-  border: solid black;
+
   border-width: 3px;
   border-spacing: 5px;
 }
 
-/*.extraRowTemplate {
-  display:none;
-}*/
 
 #map {
+  margin: auto;
   background: rgb(86,158,44);
   width: 1200px;
   height: 200px;
