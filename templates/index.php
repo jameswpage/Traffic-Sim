@@ -32,11 +32,11 @@
 		<!-- FORM FOR SUBMITTING NOW PATH OF FRONT CAR -->
 		<div id = 'form'>
 			<h3>Head Car Action</h3>
-			<form id = "mpath" name = "mpath" action = './../cgitest.cgi' method="POST" onsubmit = "return validateForm(this)">
+			<form id = "mpath" name = "mpath" action = './../cgitest.cgi' method="POST">
 
-				Total Time (in ms): <input type = "text" name = "ttime">
-				Number of Cars (1-10): <input type = "text" name = "carnum">
-				Initial Speed (fps): <input type = "text" name = "initspeed"><br>
+				Total Time (in ms): <input type = "text" name = "ttime" value = "30000">
+				Number of Cars (1-10): <input type = "text" name = "carnum" value = "10">
+				Initial Speed (fps): <input type = "text" name = "initspeed" value = "60"><br>
 				<br>
 
 				<!--extraRowTemplate will be repeated for every change in the accleration of the
@@ -62,70 +62,57 @@
 			</form>
 		</div>
 
+
+
 		<!--FORM VALIDATION-->
-		<!--I am currently working on two ways to validate the form, neither are working correctly right now-->
-
-		<script type="text/javascript">
-			var button = document.querySelector('input[type=submit]')
-
-			button.addEventListener('click', function onClick(event) {
-			  var ttime = document.querySelector('input[name=ttime]')
-			  var carnum = document.querySelector('input[name=carnum]')
-			  var initspeed = document.querySelector('input[name=initspeed]')
-			  var change = document.querySelector('select[name=change]')
-			  var starttime = document.querySelector('input[name=starttime]')
-			  var endtime = document.querySelector('input[name=endtime]')
-			  var amount = document.querySelector('input[name=amount]')
-
-			  console.info('ttime', ttime.value)
-			  console.info('carnum', carnum.value)
-			  console.info('initspeed', initspeed.value)
-			  console.info('change', change.value)
-			  console.info('starttime', starttime.value)
-			  console.info('endtime', endtime.value)
-			  console.info('amount', amount.value)
-			  
-			  event.preventDefault()
-			})
-		</script>
-
 		<script type="text/javascript">
 			function validateForm(form){
 				
 				var ttime = document.querySelector('input[name=ttime]');
 				var carnum = document.querySelector('input[name=carnum]');
 				var initspeed = document.querySelector('input[name=initspeed]');
-				var change = document.querySelector('select[name=change]');
-				var starttime = document.querySelector('input[name=starttime]');
-				var endtime = document.querySelector('input[name=endtime]');
-				var amount = document.querySelector('input[name=amount]');
+				var change = document.querySelectorAll('select[name=change]');
+				var starttime = document.querySelectorAll('input[name=starttime]');
+				var endtime = document.querySelectorAll('input[name=endtime]');
+				var amount = document.querySelectorAll('input[name=amount]');
 
-				console.info('ttime', ttime.value);
-				console.info('carnum', carnum.value);
-				console.info('initspeed', initspeed.value);
-				console.info('change', change.value);
-				console.info('starttime', starttime.value);
-				console.info('endtime', endtime.value);
-				console.info('amount', amount.value);
+				if(ttime.value == '' || ttime.value > 60000){
+					alert("Total Time must be under 1 minute");
+					return false;
+				}
+				if(carnum.value == '' || carnum.value > 10 || carnum.value < 1){
+					alert("Must have between 1-10 cars");
+					return false;
+				} 
+				if(parseInt(carnum.value) != carnum.value){
+					alert("Cannot have fractions of cars");
+					return false;
+				}
+				if(initspeed.value == '' || initspeed.value > 120 || initspeed.value < 0){
+					alerts("Cars travel between 0 and 120 fps");
+					return false;
+				}
 
-				var tt = document.forms[0].ttime.value;
-				var cn = document.forms[0].carnum.value;
-				var is = document.forms[0].initspeed.value;
-				var cha = document.forms[0].change.value;
-				var sta = document.forms[0].starttime.value;
-				var eta = document.forms[0].endtime.value;
-				var ama = document.forms[0].amount.value;
-
-				console.log(tt);
-				console.log(cn);
-				console.log(is);
-				console.log(cha);
-				console.log(sta);
-				console.log(eta);
-				console.log(ama);
-				
-				
-				return false;
+				var current_min = 0;
+				for(var i = 0; i < change.length; i++){
+					if(starttime[i].value == '' || endtime[i].value == '' || amount[i].value == ''){
+						alert("Time and Amount fields must be filled out");
+						return false;
+					}
+					if(parseInt(starttime[i].value) < current_min){
+						console.log(starttime[i].value);
+						console.log(current_min);
+						alert("Overlapping or negative intervals");
+						return false;
+					}
+					if(parseInt(endtime[i].value) < starttime[i].value){
+						alert("End-time cannot be less than Start-time");
+						return false;
+					}
+					current_min = endtime[i].value;
+				}
+				alert("here");
+				return true;
 			}
 		</script>
 
@@ -135,9 +122,6 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 				//generate an extra row to change path of head car
-				$('<div>', 
-					{'class' : 'extraRow', html: newRow()
-				}).appendTo('#container');
 				$('#addRow').click(function() {
 					$('<div/>', {
 						'class': 'extraRow', html: newRow()
@@ -147,16 +131,13 @@
 				//
   				var $form = $('form');
   				var $button = document.querySelector('input[type=submit]');
-  				//$form.submit(function(){}
-   				$button.addEventListener('click', function(){
-   					//one way to validate form
-   					if(!validateForm($form)){
-   						console.log("here");
+   				$form.submit(function(){
+   					if(!validateForm(this)){
    						//returning false means because form is not valid
    						return false;
    					}
-   					var url = $($form).attr('action');
-   					var formData = $($form).serialize();
+   					var url = $(this).attr('action');
+   					var formData = $(this).serialize();
    			
       				$.post(url, formData, function(response){
             			alert('responding');

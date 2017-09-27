@@ -1,8 +1,14 @@
 /*James Page*/
 /*This is the CSS file for the traffic site*/
 
+
+@font-face {font-family: lekton; src: url('./fonts/lekton/Lekton-Regular.ttf'); }
+@font-face {font-family: exo; src: url('./fonts/exo-2-0/OFT/Exo2.0-Regular.otf'); }
+@font-face {font-family: inconsolata; src: url('./fonts/inconsolata/Inconsolata-Regular.ttf'); }
+@font-face {font-family: stm; src: url('./fonts/share-tech-mono/ShareTechMono-Regular.ttf'); }
+
 * {
-	font-family: arial;
+	font-family: lekton;
 }
 
 body {
@@ -10,12 +16,20 @@ body {
 }
 
 h1 {
-	font: 56px arial;
+	font: 56px lekton;
 }
 
-.extraRowTemplate {
-  display:none;
+#form {
+  width: 1100px;
+  left: 50px;
+  border: solid black;
+  border-width: 3px;
+  border-spacing: 5px;
 }
+
+/*.extraRowTemplate {
+  display:none;
+}*/
 
 #map {
   background: rgb(86,158,44);
