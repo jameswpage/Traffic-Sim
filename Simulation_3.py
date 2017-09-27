@@ -173,13 +173,22 @@ class Simulation:
         if len(head_pos) != len(complete_data):
             return "Array Size Error"
         
-        #create JSON table
+        car_num = self.chain.size
+        
         json_table = [0]*len(complete_data)
         for i, time in enumerate(complete_data):
-            json_table[i] = {'ms_time': i+1, 'head_pos' : head_pos[i], 'Car1' : time[0], 
-            'Car2' : time[1], 'Car3' : time[2], 'Car4' : time[3], 'Car5' : time[4],
-            'Car6' : time[5], 'Car7' : time[6], 'Car8' : time[7], 'Car9' : time[8],
-            'Car10' : time[9]}
+            json_table[i] = {'ms_time': i+1, 'head_pos' : head_pos[i], 'Car1' : time[0]} 
+            for j in range(1, car_num):
+                st = 'Car' + str(j+1)
+                json_table[i][st] = time[j]
+        
+        #create JSON table
+        #json_table = [0]*len(complete_data)
+        #for i, time in enumerate(complete_data):
+        #    json_table[i] = {'ms_time': i+1, 'head_pos' : head_pos[i], 'Car1' : time[0], 
+        #    'Car2' : time[1], 'Car3' : time[2], 'Car4' : time[3], 'Car5' : time[4],
+        #    'Car6' : time[5], 'Car7' : time[6], 'Car8' : time[7], 'Car9' : time[8],
+        #    'Car10' : time[9]}
         
         with open('./simulations/trial.json', 'w') as outfile:
             json.dump(json_table, outfile)
@@ -187,11 +196,11 @@ class Simulation:
                 
     
 
-def createAndRun(time, change, st, et, am):
+def createAndRun(time, carnum, initspeed, change, st, et, am):
     #creates a path for the first car and runs the simulation
     #exports the data to a json file (refer to exportToJSON for filename)
-    sim = Simulation(time)
-    sim.createChain()
+    sim = Simulation(int(time))
+    sim.createChain(int(carnum), int(initspeed))
     
     #cv = change value which indicated the direction of change (acc or dec)
     if type(st) == list:
@@ -208,7 +217,7 @@ def createAndRun(time, change, st, et, am):
             cv[i] = 1
     
     #create initial path with not acceleration and constant speed
-    arr = [[0, sim.chain.head.speed, 0]] * time
+    arr = [[0, sim.chain.head.speed, 0]] * int(time)
     
     #set initial path based on input values
     for i in range(len(cv)):
