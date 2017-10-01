@@ -57,7 +57,8 @@
 
 				</div>
 
-				<div style = "width: 400px; margin: 0 auto;">
+				<div style = "height: 10px; width: 100%"></div>
+				<div style = "margin: 0 auto; width: 20%; ">
 					<a href = "#" id = "addRow" class = "plus-icon">+ Add Row +</a><br/>
 				</div>
 
@@ -69,6 +70,7 @@
 
 		<!--FORM VALIDATION-->
 		<script type="text/javascript">
+
 			function validateForm(form){
 				
 				var ttime = document.querySelector('input[name=ttime]');
@@ -187,13 +189,19 @@
 		</script>
 
 
-		<p>
+		<!-- <p>
 			<button onclick="myMove()">Run Simulation</button>
-		</p> 
+		</p>  -->
 
 		<!--style of animation found in CSS-->
-		<div id = "map">
-			<div id ="road">
+		<div>
+			<div id = "map">
+				<p id = "menu">
+					<button onclick="myMove()">Run Simulation</button>
+					<button class = "pause">Pause</button>
+				</p> 
+				<div id ="road">
+				</div>
 			</div>
 		</div>
 
@@ -202,23 +210,37 @@
 
 		<!--this code is for generating the initial placement of the cars-->
 		<script>
+			//variables for displaying the the car and road style
 			var length = 1178;
-			//var norm = 1.0 * length / (times_table[(times_table.length - 1)].head_pos);
 			var norm = 1.6
+
+			//initialize inner html
 			var text = "";
-			var init_pos = (times_table[0].Car10);
-			text += "<div id =\"car1\" style = \"left:" + norm*(init_pos + 13) + "px; width: " + (13*norm) + "px; height: " + (6*norm) + "px; top: " + (5*norm) + "px\"></div>";
-			text += "<div id =\"car2\" style = \"left:" + norm*(init_pos - times_table[0].Car2) + "px; width: " + (13*norm) + "px; height: " + (6*norm) + "px; top: " + (5*norm) + "px\"></div>";
-			text += "<div id =\"car3\" style = \"left:" + norm*(init_pos - times_table[0].Car3) + "px; width: " + (13*norm) + "px; height: " + (6*norm) + "px; top: " + (5*norm) + "px\"></div>";
-			text += "<div id =\"car4\" style = \"left:" + norm*(init_pos - times_table[0].Car4) + "px; width: " + (13*norm) + "px; height: " + (6*norm) + "px; top: " + (5*norm) + "px\"></div>";
-			text += "<div id =\"car5\" style = \"left:" + norm*(init_pos - times_table[0].Car5) + "px; width: " + (13*norm) + "px; height: " + (6*norm) + "px; top: " + (5*norm) + "px\"></div>";
-			text += "<div id =\"car6\" style = \"left:" + norm*(init_pos - times_table[0].Car6) + "px; width: " + (13*norm) + "px; height: " + (6*norm) + "px; top: " + (5*norm) + "px\"></div>";
-			text += "<div id =\"car7\" style = \"left:" + norm*(init_pos - times_table[0].Car7) + "px; width: " + (13*norm) + "px; height: " + (6*norm) + "px; top: " + (5*norm) + "px\"></div>";
-			text += "<div id =\"car8\" style = \"left:" + norm*(init_pos - times_table[0].Car8) + "px; width: " + (13*norm) + "px; height: " + (6*norm) + "px; top: " + (5*norm) + "px\"></div>";
-			text += "<div id =\"car9\" style = \"left:" + norm*(init_pos - times_table[0].Car9) + "px; width: " + (13*norm) + "px; height: " + (6*norm) + "px; top: " + (5*norm) + "px\"></div>";
-			text += "<div id =\"car10\" style = \"left:" + norm*(init_pos - times_table[0].Car10) + "px; width: " + (13*norm) + "px; height: " + (6*norm) + "px; top: " + (5*norm) + "px\"></div>";
+
+			//get number of cars from number of keys in times_table json dictionary
+			var car_arr = Object.keys(times_table[0]);
+			var car_num = car_arr.length - 2;
+			var lastcar = 'Car' + car_num;
+			console.log(car_num);
+			
+			//initialize the initial position of the head car (so that the last car is at the left most part of the 
+			//road)
+			var init_pos = times_table[0][lastcar];
+
+			//add html for first car because it must exist (and none of the others need to)
+			text += "<div id =\"Car1\" style = \"left:" + norm*(init_pos + 13) + "px; width: " + (13*norm) + "px; height: " + (6*norm) + "px; top: " + (5*norm) + "px\"></div>";
+
+			//for loop up to the number of cars to add a div for each car
+			for(var i = 2; i <= car_num; i++){
+				var curcar = 'Car' + i;
+				text += "<div id =\"" + curcar + "\" style = \"left:" + norm*(init_pos - times_table[0][curcar]) + "px; width: " + (13*norm) + "px; height: " + (6*norm) + "px; top: " + (5*norm) + "px\"></div>";
+			}
+		
+			//add divider to the road and set the html 
 			text += "<p style=\"height: " + (norm*13*1.5 - 2.5) + "px; border-bottom: 5px dashed #FFFFFF;\">"
 			document.getElementById("road").innerHTML = text;
+
+			//set style of road 
 			document.getElementById("road").style.height = (norm * 13 * 3) + "px";
 			document.getElementById("road").style.top = (100 - (norm*13*1.3)) + "px";
 		</script>
@@ -229,37 +251,56 @@
 			var id;
 			function myMove() {
 				clearInterval(id);
-			  	var car1 = document.getElementById("car1"); 
-			  	var car2 = document.getElementById("car2"); 
-			  	var car3 = document.getElementById("car3"); 
-			  	var car4 = document.getElementById("car4"); 
-			  	var car5 = document.getElementById("car5"); 
-			  	var car6 = document.getElementById("car6"); 
-			  	var car7 = document.getElementById("car7"); 
-			  	var car8 = document.getElementById("car8"); 
-			  	var car9 = document.getElementById("car9"); 
-			  	var car10 = document.getElementById("car10"); 
+			  	var car1 = document.getElementById("Car1"); 
+	
 			  	//This value must match the value in style.css
 			  	var i = 0;
 			  	var time_interval = 10;
+			  	var total_time = times_table.length;
+			  	var isPaused = false;
+			  	var isCrash = false;
 			  	id = setInterval(move_cars, time_interval);
 			  	function move_cars() {
 			    	if (!times_table[i]) {
 			      		clearInterval(id);
 			    	} else {
 			      		car1.style.left = (norm*(parseFloat(times_table[i].head_pos) + parseFloat(init_pos)))%(1200-norm*13) + 'px'; 
-			      		car2.style.left = (norm*(parseFloat(times_table[i].head_pos) + parseFloat(init_pos) - parseFloat(times_table[i].Car2))%(1200-norm*13)) + 'px';
-			      		car3.style.left = (norm*(parseFloat(times_table[i].head_pos) + parseFloat(init_pos) - parseFloat(times_table[i].Car3))%(1200-norm*13)) + 'px';
-			      		car4.style.left = (norm*(parseFloat(times_table[i].head_pos) + parseFloat(init_pos) - parseFloat(times_table[i].Car4))%(1200-norm*13)) + 'px';
-			      		car5.style.left = (norm*(parseFloat(times_table[i].head_pos) + parseFloat(init_pos) - parseFloat(times_table[i].Car5))%(1200-norm*13)) + 'px';
-			      		car6.style.left = (norm*(parseFloat(times_table[i].head_pos) + parseFloat(init_pos) - parseFloat(times_table[i].Car6))%(1200-norm*13)) + 'px';
-			      		car7.style.left = (norm*(parseFloat(times_table[i].head_pos) + parseFloat(init_pos) - parseFloat(times_table[i].Car7))%(1200-norm*13)) + 'px';
-			      		car8.style.left = (norm*(parseFloat(times_table[i].head_pos) + parseFloat(init_pos) - parseFloat(times_table[i].Car8))%(1200-norm*13)) + 'px';
-			      		car9.style.left = (norm*(parseFloat(times_table[i].head_pos) + parseFloat(init_pos) - parseFloat(times_table[i].Car9))%(1200-norm*13)) + 'px';
-			      		car10.style.left = (norm*(parseFloat(times_table[i].head_pos) + parseFloat(init_pos) - parseFloat(times_table[i].Car10))%(1200-norm*13)) + 'px';
-			      		i += time_interval;
+			      		var prevcar = car1;
+			      		for(var j = 2; j <= car_num; j++){
+			      			var curcarname = 'Car' + j;
+			      			var curcar = document.getElementById(curcarname);
+			      			curcar.style.left = (norm*(parseFloat(times_table[i].head_pos) + parseFloat(init_pos) - parseFloat(times_table[i][curcarname]))%(1200-norm*13)) + 'px';
+			      			if(collision($(curcar), $(prevcar))){
+			      				i += total_time;
+			      				break;
+			      			}
+			      			prevcar = curcar;
+			      		}
+			      		if (!isPaused){
+			      			i += time_interval;
+			      		}
 			    	}
 			  	}
+
+			  	//collision test function taken from stack overflow user BC.
+			  	function collision($div1, $div2){
+			  		var x1 = $div1.offset().left;
+				    var w1 = $div1.outerWidth(true);
+				    var r1 = x1 + w1;
+				    var x2 = $div2.offset().left;
+				    var w2 = $div2.outerWidth(true);
+				    var r2 = x2 + w2;
+				        
+				    if (r1 < x2 || x1 > r2) return false;
+				    $div1.css("background-color",  "blue");
+				    $div2.css("background-color",  "blue");
+				    return true;
+			  	}
+			  	
+			  	$('.pause').on('click', function(e){
+			  		e.preventDefault();
+			  		isPaused = !isPaused;
+			  	});
 			}
 		</script>
 	</body>

@@ -75,6 +75,12 @@ a:active {
   border-radius: 10px;
 }
 
+#menu {
+  position: relative;
+  top: 10px;
+  left: 10px;
+}
+
 #road {
   width: 100%;
   height: 200px;
@@ -84,70 +90,70 @@ a:active {
 
 
 /*********************************BEGINNING OF CAR DIVS*************************************/
-#car1 {
+#Car1 {
   width: 13px;
   height: 7px;
   position: absolute;
   background-color: red;
 }
 
-#car2 {
+#Car2 {
   width: 13px;
   height: 7px;
   position: absolute;
   background-color: red;
 }
 
-#car3 {
+#Car3 {
   width: 13px;
   height: 7px;
   position: absolute;
   background-color: red;
 }
 
-#car4 {
+#Car4 {
   width: 13px;
   height: 7px;
   position: absolute;
   background-color: red;
 }
 
-#car5 {
+#Car5 {
   width: 13px;
   height: 7px;
   position: absolute;
   background-color: red;
 }
 
-#car6 {
+#Car6 {
   width: 13px;
   height: 7px;
   position: absolute;
   background-color: red;
 }
 
-#car7 {
+#Car7 {
   width: 13px;
   height: 7px;
   position: absolute;
   background-color: red;
 }
 
-#car8 {
+#Car8 {
   width: 13px;
   height: 7px;
   position: absolute;
   background-color: red;
 }
 
-#car9 {
+#Car9 {
   width: 13px;
   height: 7px;
   position: absolute;
   background-color: red;
 }
 
-#car10 {
+#Car10 {
   width: 13px;
   height: 7px;
   position: absolute;
