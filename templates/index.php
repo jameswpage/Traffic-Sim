@@ -161,6 +161,7 @@
 		   						if(!('error' in obj)){
 		   							times_json = obj.result;
 									times_table = JSON.parse(JSON.parse(times_json));
+									setInitPostion();
 		   						}
 		   						else{
 		   							//if there is a problem, it is sent to the console
@@ -199,6 +200,7 @@
 				<p id = "menu">
 					<button onclick="myMove()">Run Simulation</button>
 					<button class = "pause">Pause</button>
+					<button class = "reset">Reset</button>
 				</p> 
 				<div id ="road">
 				</div>
@@ -210,39 +212,56 @@
 
 		<!--this code is for generating the initial placement of the cars-->
 		<script>
+		
 			//variables for displaying the the car and road style
 			var length = 1178;
-			var norm = 1.6
+			var norm = 1.6;
 
 			//initialize inner html
-			var text = "";
+			// var text = "";
 
-			//get number of cars from number of keys in times_table json dictionary
-			var car_arr = Object.keys(times_table[0]);
-			var car_num = car_arr.length - 2;
-			var lastcar = 'Car' + car_num;
-			console.log(car_num);
-			
-			//initialize the initial position of the head car (so that the last car is at the left most part of the 
-			//road)
-			var init_pos = times_table[0][lastcar];
+			//initialize variables for setting initial postions of car divs
+			var car_arr;
+			var car_num;
+			var lastcar;
+			var init_pos;
 
-			//add html for first car because it must exist (and none of the others need to)
-			text += "<div id =\"Car1\" style = \"left:" + norm*(init_pos + 13) + "px; width: " + (13*norm) + "px; height: " + (6*norm) + "px; top: " + (5*norm) + "px\"></div>";
+			setInitPostion();
 
-			//for loop up to the number of cars to add a div for each car
-			for(var i = 2; i <= car_num; i++){
-				var curcar = 'Car' + i;
-				text += "<div id =\"" + curcar + "\" style = \"left:" + norm*(init_pos - times_table[0][curcar]) + "px; width: " + (13*norm) + "px; height: " + (6*norm) + "px; top: " + (5*norm) + "px\"></div>";
-			}
-		
-			//add divider to the road and set the html 
-			text += "<p style=\"height: " + (norm*13*1.5 - 2.5) + "px; border-bottom: 5px dashed #FFFFFF;\">"
-			document.getElementById("road").innerHTML = text;
-
-			//set style of road 
+			//position road	
 			document.getElementById("road").style.height = (norm * 13 * 3) + "px";
 			document.getElementById("road").style.top = (100 - (norm*13*1.3)) + "px";
+
+			//this function sets the position of the cars in the simulation
+			function setInitPostion(){
+				//initialize inner html
+				var text = "";
+
+				//get number of cars from number of keys in times_table json dictionary
+				car_arr = Object.keys(times_table[0]);
+				car_num = car_arr.length - 2;
+				lastcar = 'Car' + car_num;
+				console.log(car_num);
+				
+				//initialize the initial position of the head car (so that the last car is at the left most part of the 
+				//road)
+				init_pos = times_table[0][lastcar];
+
+				//add html for first car because it must exist (and none of the others need to)
+				text += "<div id =\"Car1\" style = \"left:" + norm*(init_pos) + "px; width: " + (13*norm) + "px; height: " + (6*norm) + "px; top: " + (5*norm) + "px; background-color: blue\"></div>";
+
+				//for loop up to the number of cars to add a div for each car
+				for(var i = 2; i <= car_num; i++){
+					var curcar = 'Car' + i;
+					text += "<div id =\"" + curcar + "\" style = \"left:" + norm*(init_pos - times_table[0][curcar]) +"px; width: " + (13*norm) + "px; height: " + (6*norm) + "px; top: " + (5*norm) + "px;" +
+						"background-color: blue\"></div>";
+				}
+			
+				//add divider to the road and set the html 
+				text += "<p style=\"margin-top: " + (norm*1.5*13 - 2.5) + "px; border-top: 5px dashed #FFFFFF;\">"
+				document.getElementById("road").innerHTML = text;
+
+			}
 		</script>
 
 
@@ -250,6 +269,7 @@
 		<script>
 			var id;
 			function myMove() {
+				setInitPostion();
 				clearInterval(id);
 			  	var car1 = document.getElementById("Car1"); 
 	
@@ -292,15 +312,34 @@
 				    var r2 = x2 + w2;
 				        
 				    if (r1 < x2 || x1 > r2) return false;
-				    $div1.css("background-color",  "blue");
-				    $div2.css("background-color",  "blue");
+				    $div1.css("background-color",  "red");
+				    $div2.css("background-color",  "red");
 				    return true;
 			  	}
-			  	
+
+			  	//design for pause button, this toggles the isPaused variable, which stops incrementing
+			  	//the while loop index in setinterval
 			  	$('.pause').on('click', function(e){
 			  		e.preventDefault();
 			  		isPaused = !isPaused;
+			  		if(isPaused){
+			  			$(this).html('Play');
+			  			$('.reset').show();
+			  		}
+			  		else{
+			  			$(this).html('Pause');
+			  			$('.reset').hide();
+			  		}
+
 			  	});
+
+			  	//reset button appears when paused is pressed
+			  	$('.reset').on('click', function(e){
+			  		clearInterval(id);
+			  		$('.pause').html('Pause');
+			  		setInitPostion();
+			  		$(this).hide();
+			  	}).hide();
 			}
 		</script>
 	</body>
