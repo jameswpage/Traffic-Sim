@@ -1,0 +1,203 @@
+/*James Page*/
+/*This is the CSS file for the traffic site*/
+
+
+@font-face {font-family: lekton; src: url('./fonts/lekton/Lekton-Regular.ttf'); }
+@font-face {font-family: exo; src: url('./fonts/exo-2-0/OFT/Exo2.0-Regular.otf'); }
+@font-face {font-family: inconsolata; src: url('./fonts/inconsolata/Inconsolata-Regular.ttf'); }
+@font-face {font-family: stm; src: url('./fonts/share-tech-mono/ShareTechMono-Regular.ttf'); }
+
+* {
+	font-family: lekton;
+}
+
+body {
+    background: white;
+}
+
+h1 {
+	font: 56px lekton;
+}
+
+/**************style for the plus and minus links***************************/
+
+.plus-icon {
+  
+  width: 96px;
+
+  font: 18px lekton;
+  border: solid #666;
+  border-width: 1px;
+
+  text-align: center;
+}
+
+.minus-icon {
+
+  font: lekton;
+  border: 1px solid black;
+
+
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+/****************************************************************************/
+
+#form {
+  margin: auto;
+  width: 1100px;
+
+  border-width: 3px;
+  border-spacing: 5px;
+}
+
+
+#map {
+  margin: auto;
+  position: relative;
+  background: rgb(86,158,44);
+  width: 1000px;
+  height: 1000px;
+  border-radius: 10px;
+}
+
+#menu {
+  position: relative;
+  top: 10px;
+  left: 10px;
+}
+
+#road {
+  position: relative;
+  width: 100%;
+  height: 1000px;
+  background: rgb(86,158,44);
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+
+/***all three lefts + line border should be 100px (margin)***/
+/***width + 2*(left+border) = 950***/
+.line {
+  position: absolute;
+  border-radius: 50%;
+  width: 868px;
+  height: 868px;
+  top: 36px;
+  left: 36px;
+  background-color: rgba(86,158,44,0);
+  border: 5px dashed #FFFFFF;
+}
+
+.inner-circ { 
+  position: absolute;
+  border-radius: 50%;
+  width: 800px;
+  height: 800px;
+  top: 34px;
+  left: 34px;
+  background-color: rgb(86,158,44);
+ }
+
+ .outer-circ { 
+  position: relative;
+  border-radius: 50%;
+  width: 950px;
+  height: 950px;
+  top: 25px;
+  left: 25px;
+  background-color: rgb(71,71,71);
+ }
+
+
+/*********************************BEGINNING OF CAR DIVS*************************************/
+#Car1 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#Car2 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#Car3 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#Car4 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#Car5 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#Car6 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#Car7 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#Car8 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#Car9 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+#Car10 {
+  width: 13px;
+  height: 7px;
+  position: absolute;
+  background-color: red;
+}
+
+/**************************************END OF CAR DIVS*************************************/
+
+
+
